@@ -1,41 +1,49 @@
 package io.pivotal.pal.tracker;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/time-entries")
 public class TimeEntryController {
     private TimeEntryRepository timeEntryRepository;
     public TimeEntryController(TimeEntryRepository timeEntryRepository) {
+        this.timeEntryRepository = timeEntryRepository;
     }
 
-    @GetMapping("/timeentry")
+
     public String timeentry() {
         return "hello";
     }
 
-    public ResponseEntity<TimeEntry> create(TimeEntry timeEntry) {
+    @PostMapping()
+    public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry timeEntry) {
 
-        return ResponseEntity.accepted().body(timeEntryRepository.create(timeEntry));
+        return ResponseEntity.status(HttpStatus.CREATED).body(timeEntryRepository.create(timeEntry));
     }
-
-    public ResponseEntity<TimeEntry> read(long l) {
-        return ResponseEntity.accepted().body(timeEntryRepository.find(l));
+    @GetMapping("/{id}")
+    public ResponseEntity<TimeEntry> read(@PathVariable("id") long l) {
+        TimeEntry entry = timeEntryRepository.find(l);
+        if(entry ==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(entry);
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(entry);
+        }
     }
-
+    @GetMapping()
     public ResponseEntity<List<TimeEntry>> list() {
-        return ResponseEntity.accepted().body(timeEntryRepository.list());
+        return ResponseEntity.status(HttpStatus.OK).body(timeEntryRepository.list());
     }
-
-    public ResponseEntity update(long l, TimeEntry expected) {
-        return ResponseEntity.accepted().body(timeEntryRepository.update(l, expected));
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable("id") long l, @RequestBody TimeEntry expected) {
+        return ResponseEntity.status(HttpStatus.OK).body(timeEntryRepository.update(l, expected));
     }
-
-    public ResponseEntity<TimeEntry> delete(long l) {
-        return ResponseEntity.accepted().body(timeEntryRepository.delete(l));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<TimeEntry> delete(@PathVariable("id") long l) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(timeEntryRepository.delete(l));
     }
 }

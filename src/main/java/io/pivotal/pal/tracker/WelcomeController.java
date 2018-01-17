@@ -10,7 +10,7 @@ public class WelcomeController {
         return "hello";
     }
     public void test(){
-        
+
     }
 
 }

@@ -1,26 +1,47 @@
 package io.pivotal.pal.tracker;
 
-import java.util.List;
+import java.util.*;
 
 public class InMemoryTimeEntryRepository implements TimeEntryRepository {
-
+    List<TimeEntry> list = new ArrayList();
     public TimeEntry create(TimeEntry timeEntry) {
-        return null;
+        list.add(timeEntry);
+        return timeEntry;
     }
 
-    public TimeEntry find(Object id) {
+    public TimeEntry find(long id) {
+        for(TimeEntry e: list){
+            if(e.getId() == id){
+                return e;
+            }
+        }
         return null;
     }
 
     public List<TimeEntry> list() {
-        return null;
+        return list;
     }
 
-    public TimeEntry update(Object id, TimeEntry timeEntry) {
-        return null;
+    public TimeEntry update(long id, TimeEntry timeEntry) {
+        for(TimeEntry e: list){
+            if(e.getId() == id){
+                e.setEntry(timeEntry);
+            }
+        }
+        return timeEntry;
     }
 
-    public TimeEntry delete(Object id) {
-        return null;
+    public TimeEntry delete(long id) {
+        TimeEntry entry = null;
+        Iterator<TimeEntry> i = list.iterator();
+        while(i.hasNext()){
+            entry = i.next();
+            if(entry.getId() == id){
+                i.remove();
+            } else {
+                entry = null;
+            }
+        }
+        return entry;
     }
 }
