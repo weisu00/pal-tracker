@@ -9,5 +9,8 @@ public class WelcomeController {
     public String sayHello() {
         return "hello";
     }
+    public void test(){
+        
+    }
 
 }
