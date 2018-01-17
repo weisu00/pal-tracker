@@ -11,5 +11,5 @@ public interface TimeEntryRepository {
 
     public TimeEntry update(Object id, TimeEntry timeEntry) ;
 
-    public void delete(Object id) ;
+    public TimeEntry delete(Object id) ;
 }

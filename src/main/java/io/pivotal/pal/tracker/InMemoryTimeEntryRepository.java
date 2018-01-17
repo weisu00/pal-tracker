@@ -2,7 +2,7 @@ package io.pivotal.pal.tracker;
 
 import java.util.List;
 
-public class InMemoryTimeEntryRepository extends TimeEntryRepository {
+public class InMemoryTimeEntryRepository implements TimeEntryRepository {
 
     public TimeEntry create(TimeEntry timeEntry) {
         return null;
@@ -20,6 +20,7 @@ public class InMemoryTimeEntryRepository extends TimeEntryRepository {
         return null;
     }
 
-    public void delete(Object id) {
+    public TimeEntry delete(Object id) {
+        return null;
     }
 }
