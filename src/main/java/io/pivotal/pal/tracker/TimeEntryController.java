@@ -20,10 +20,12 @@ public class TimeEntryController {
         return "hello";
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<TimeEntry> create(@RequestBody TimeEntry timeEntry) {
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(timeEntryRepository.create(timeEntry));
+        System.out.println("create");
+        TimeEntry temp = timeEntryRepository.create(timeEntry);
+        System.out.println(temp.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(temp);
     }
     @GetMapping("/{id}")
     public ResponseEntity<TimeEntry> read(@PathVariable("id") long l) {

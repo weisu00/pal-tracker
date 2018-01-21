@@ -3,8 +3,12 @@ package io.pivotal.pal.tracker;
 import java.util.*;
 
 public class InMemoryTimeEntryRepository implements TimeEntryRepository {
+    long id = 100;
     List<TimeEntry> list = new ArrayList();
     public TimeEntry create(TimeEntry timeEntry) {
+        if(timeEntry.getId()==0){
+            timeEntry.setId(id++);
+        }
         list.add(timeEntry);
         return timeEntry;
     }

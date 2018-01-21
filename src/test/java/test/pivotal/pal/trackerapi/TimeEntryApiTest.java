@@ -32,7 +32,8 @@ public class TimeEntryApiTest {
 
     @Test
     public void testCreate() throws Exception {
-        ResponseEntity<String> createResponse = restTemplate.postForEntity("/time-entries", timeEntry, String.class);
+        TimeEntry temp = new TimeEntry(123, 456, LocalDate.parse("2017-01-08"), 8);
+        ResponseEntity<String> createResponse = restTemplate.postForEntity("/time-entries", temp, String.class);
 
 
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -74,6 +75,7 @@ public class TimeEntryApiTest {
 
         assertThat(readResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         DocumentContext readJson = parse(readResponse.getBody());
+        System.out.println(readResponse.getBody());
         assertThat(readJson.read("$.id", Long.class)).isEqualTo(id);
         assertThat(readJson.read("$.projectId", Long.class)).isEqualTo(123L);
         assertThat(readJson.read("$.userId", Long.class)).isEqualTo(456L);
